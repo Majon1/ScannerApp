@@ -408,13 +408,12 @@ namespace Scanner
                             }
                         }
                     }
-                    Console.WriteLine("a is " + a);
 
                     foreach (string l in newTemp)
                     {
                         writer.WriteLine(l);
                     }
-                    Console.WriteLine("a equals " + a);
+                    writer.WriteLine("");
 
                     for (int i = a; i < lines.Count(); i++)
                     {

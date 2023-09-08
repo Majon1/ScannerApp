@@ -1,4 +1,16 @@
-﻿
+// ********************************************************************
+// * 
+// * File   : Program.cs
+// * Author : Mathilda Nynäs <mathilda.nynas@gmail.com>
+// *
+// * Copyright (C) (2023) Centria University of Applied Sciences.
+// * All rights reserved.
+// *
+// * Unauthorized copying of this file, via any medium is strictly
+// * prohibited.
+// *
+// ********************************************************************
+
 using LibGit2Sharp;
 using System.IO;
 using static System.Net.WebRequestMethods;
@@ -29,16 +41,26 @@ namespace Scanner
             {
                 Console.WriteLine("Give address to repository/directory:");
                 path = Console.ReadLine()!;
-                if (Repository.IsValid(path))
+                try
                 {
-                    break;
+                    if (Directory.Exists(path + "/.git"))
+
+                    {
+                        break;
+                    }
+                    else if (Directory.Exists(path + "/.hg"))
+                    {
+                        Console.WriteLine("hg found");
+                        break;
+                    }
                 }
-                else if (Directory.Exists(path + "/.hg"))
+                catch
                 {
-                    Console.WriteLine("hg found");
-                    break;
-                }
+                    Console.WriteLine("not working " + path);
+                };
+               
             }
+            Console.WriteLine("path is fine " + path);
 
             if (r == "mercurial")
             {
@@ -174,7 +196,7 @@ namespace Scanner
             List<string> f = files.Select(file => file.filePath).ToList(); //get filename as string
             foreach (string name in f)
             {
-                Combine h = new(Convert.ToString(path + "\\" + name));
+                Combine h = new(Convert.ToString(path + "//" + name));
 
                 for (int j = 0; j < commitInfo.Count; j++)
                 {
